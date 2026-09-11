@@ -326,7 +326,7 @@ main { position: relative; z-index: 1; }
 .brand-mark svg { width: 28px; height: 28px; }
 .brand-mark path { fill: #0A0A0A; }
 @keyframes brand-grad { 0%, 100% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } }
-.brand > span { background: linear-gradient(100deg, var(--fg) 0%, var(--fg) 38%, var(--accent) 50%, var(--accent-2) 56%, var(--fg) 66%, var(--fg) 100%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 6s linear infinite; }
+.brand > span:not(.brand-mark) { background: linear-gradient(100deg, var(--fg) 0%, var(--fg) 38%, var(--accent) 50%, var(--accent-2) 56%, var(--fg) 66%, var(--fg) 100%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 6s linear infinite; }
 .nav-desktop { display: none; align-items: center; gap: 0.25rem; }
 .nav-desktop a {
   display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.9rem; border-radius: 999px;
@@ -932,6 +932,6 @@ html[data-theme="dark"] body::after { opacity: 0.07; }
 .btn-primary:hover, .btn-primary:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent), 0 14px 34px -14px var(--accent-2); }
 .number .value sup { background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 @media (prefers-reduced-motion: reduce) {
-  .brand-mark, .brand > span, h1 em, h2 em, .h1 em, .h2 em, .grad, .js .hero-title em.is-split .w, .numbers, .cursor-ring { animation: none; }
-  .brand > span { background: none; -webkit-text-fill-color: currentColor; }
+  .brand-mark, .brand > span:not(.brand-mark), h1 em, h2 em, .h1 em, .h2 em, .grad, .js .hero-title em.is-split .w, .numbers, .cursor-ring { animation: none; }
+  .brand > span:not(.brand-mark) { background: none; -webkit-text-fill-color: currentColor; }
 }
