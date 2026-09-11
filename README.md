@@ -31,7 +31,6 @@ The site has two jobs: present the brand, and stand as evidence of a real, compl
 ├── _headers                    Security headers for Cloudflare Pages (and Netlify)
 ├── netlify.toml                Netlify config (publish dir + headers)
 ├── vercel.json                 Vercel config (clean URLs + headers)
-└── package.json                `npm run dev` only; nothing to install
 ```
 
 ## Run locally
@@ -39,7 +38,7 @@ The site has two jobs: present the brand, and stand as evidence of a real, compl
 Any static server works. Pages use absolute paths (`/assets/...`), so serve from the repository root.
 
 ```bash
-npm run dev            # serves on http://localhost:3000
+npx --yes serve . -l 3000      # http://localhost:3000
 # or
 python3 -m http.server 3000
 ```
@@ -93,7 +92,7 @@ The site is static; push the repository and point the host at the root directory
 
 **Vercel** (recommended)
 1. vercel.com → Add New → Project → Import Git Repository → pick `themoneylab54-blip/Lizom-ltd` and the branch you want to deploy (`main` after merging, or `claude/elegant-babbage-ybihz8` to preview).
-2. Framework preset: *Other*. Build command: empty. Output directory: `.` (root).
+2. Framework preset: *Other*. Leave Build Command, Output Directory and Install Command empty: there is nothing to build, Vercel serves the repository root as static files.
 3. Deploy. `vercel.json` adds security headers and clean URLs.
 4. Settings → Domains → add `getlizom.com` and `www.getlizom.com`, then create the DNS records Vercel shows (A record for the apex, CNAME for www).
 
