@@ -51,7 +51,6 @@ Search the code for `{{` and replace each placeholder:
 |---|---|---|
 | `{{COMPANY_NUMBER}}` | every page (footer, legal, contact, about, JSON-LD) | Companies House number |
 | `{{WEB3FORMS_ACCESS_KEY}}` | `assets/js/contact.js`, first constant | Access key from web3forms.com, created with hello@getlizom.com |
-| `{{HOSTING_PROVIDER}}` | `legal/index.html`, `privacy/index.html` | Vercel, Netlify or Cloudflare, as deployed |
 | `{{NUMERO_TVA}}` | `legal/index.html` | VAT number. The row stays hidden until the placeholder is replaced |
 | `{{EU_REPRESENTATIVE}}` | `privacy/index.html` | Name and address of the Article 27 GDPR representative, if appointed. Hidden until replaced |
 
