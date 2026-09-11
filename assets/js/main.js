@@ -311,21 +311,6 @@
   }
 
   /* ------------------------------------------------------------------
-     12. Shop links: until {{URL_BOUTIQUE}} is replaced, route to contact
-     ------------------------------------------------------------------ */
-  function initShopLinks() {
-    $$("a[data-shop-link]").forEach(function (a) {
-      var href = a.getAttribute("href") || "";
-      if (href.indexOf("{{") !== -1 || href === "" || href === "#") {
-        a.setAttribute("href", "/contact/?topic=order");
-        a.setAttribute("title", "Online store opening soon. Contact us to order.");
-        a.removeAttribute("target");
-        a.removeAttribute("rel");
-      }
-    });
-  }
-
-  /* ------------------------------------------------------------------
      13. Optional legal fields: show only once the placeholder is filled
      ------------------------------------------------------------------ */
   function initOptionalFields() {
@@ -391,7 +376,6 @@
     initOps();
     initMagnetic();
     initHalo();
-    initShopLinks();
     initOptionalFields();
     initToc();
     initTopicParam();

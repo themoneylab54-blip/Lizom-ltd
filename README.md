@@ -1,6 +1,6 @@
 # getlizom.com — Lizom Pro Ltd
 
-Corporate website for **Lizom Pro Ltd**, a UK-registered direct-to-consumer brand (lingerie, clothing, cosmetics, accessories) shipping across Europe.
+Corporate showcase website for **Lizom Pro Ltd**, a UK-registered direct-to-consumer brand (lingerie, clothing, cosmetics, accessories) shipping across Europe. The site presents the company, its range and its operating model; it does not sell online.
 
 The site has two jobs: present the brand, and stand as evidence of a real, compliant business during bank and payment-provider KYC reviews. Every page carries the full company identification required by UK law (registered name, company number, place of registration, registered office, contact email).
 
@@ -52,7 +52,6 @@ Search the code for `{{` and replace each placeholder:
 |---|---|---|
 | `{{COMPANY_NUMBER}}` | every page (footer, legal, contact, about, JSON-LD) | Companies House number |
 | `{{WEB3FORMS_ACCESS_KEY}}` | `assets/js/contact.js`, first constant | Access key from web3forms.com, created with hello@getlizom.com |
-| `{{URL_BOUTIQUE}}` | every page (Shop buttons, product links) | URL of the online store. Until replaced, Shop links route to `/contact/?topic=order` automatically |
 | `{{HOSTING_PROVIDER}}` | `legal/index.html`, `privacy/index.html` | Vercel, Netlify or Cloudflare, as deployed |
 | `{{NUMERO_TVA}}` | `legal/index.html` | VAT number. The row stays hidden until the placeholder is replaced |
 | `{{EU_REPRESENTATIVE}}` | `privacy/index.html` | Name and address of the Article 27 GDPR representative, if appointed. Hidden until replaced |
@@ -116,7 +115,7 @@ After the first deploy: verify `https://getlizom.com/sitemap.xml` and `robots.tx
 
 Header and footer are repeated verbatim in each HTML file (no templating), so a change to either must be made in all seven files. Company details appear in: footer (all pages), `legal/index.html`, `privacy/index.html`, `terms/index.html`, `contact/index.html`, `about/index.html`, and the JSON-LD block in each `<head>`.
 
-Product copy deliberately describes materials, formats and intended use only. Keep it that way: efficacy or health claims on cosmetics are the most common reason payment providers freeze accounts in this category.
+There are no prices, buy buttons or store links: this is a showcase site. Product copy deliberately describes materials, formats and intended use only. Keep it that way: efficacy or health claims on cosmetics are the most common reason payment providers freeze accounts in this category.
 
 ## Security headers and CSP
 
