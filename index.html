@@ -86,7 +86,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <div class="container">
-    <a class="brand" href="/" aria-label="Lizom, home"><svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect width="28" height="28" rx="7"/><path d="M9 6.5h3.4v11.6H20V21.5H9z"/></svg><span>Lizom</span></a>
+    <a class="brand" href="/" aria-label="Lizom, home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 28 28" focusable="false"><path d="M9 6.5h3.4v11.6H20V21.5H9z"/></svg></span><span>Lizom</span></a>
     <nav class="nav-desktop" aria-label="Main">
       <a href="/#process" aria-current="page">Process</a>
       <a href="/about/">About</a>
@@ -160,6 +160,12 @@
       </div>
 
       <svg class="route" viewBox="0 0 1200 320" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="routeGrad" gradientUnits="userSpaceOnUse" x1="150" y1="0" x2="1050" y2="0">
+            <stop offset="0" class="stop-a"/><stop offset="0.5" class="stop-b"/><stop offset="1" class="stop-a"/>
+            <animateTransform attributeName="gradientTransform" type="translate" from="-900 0" to="900 0" dur="6s" repeatCount="indefinite"/>
+          </linearGradient>
+        </defs>
         <path class="route-track" d="M150,230 C300,230 300,90 450,90 C600,90 600,230 750,230 C900,230 900,90 1050,90"/>
         <path id="route" class="route-path" pathLength="1" d="M150,230 C300,230 300,90 450,90 C600,90 600,230 750,230 C900,230 900,90 1050,90"/>
         <g class="route-node" transform="translate(150 230)"><circle class="halo" r="14"/><circle class="core" r="7"/></g>
@@ -512,7 +518,7 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col footer-company">
-        <a class="brand" href="/" aria-label="Lizom, home"><svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true" focusable="false"><rect width="28" height="28" rx="7"/><path d="M9 6.5h3.4v11.6H20V21.5H9z"/></svg><span>Lizom</span></a>
+        <a class="brand" href="/" aria-label="Lizom, home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 28 28" focusable="false"><path d="M9 6.5h3.4v11.6H20V21.5H9z"/></svg></span><span>Lizom</span></a>
         <p><strong>Lizom Pro Ltd</strong> is a private limited company registered in England and Wales under company number <span class="mono">{{COMPANY_NUMBER}}</span>.</p>
         <address>Registered office: Unit A, 82 James Carter Road, Mildenhall, IP28 7DE, United Kingdom</address>
         <p>Email: <a href="mailto:hello@getlizom.com">hello@getlizom.com</a></p>

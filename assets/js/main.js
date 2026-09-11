@@ -179,6 +179,8 @@
     var journey = $(".journey");
     if (!journey) return;
     var dots = $$(".route-dot", journey);
+    var svg = $(".route", journey);
+    if (svg && reduceMotion && typeof svg.pauseAnimations === "function") svg.pauseAnimations();
     function activate() {
       journey.classList.add("is-active");
       if (reduceMotion) return;

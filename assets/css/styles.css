@@ -203,10 +203,11 @@ h1, .h1 { font-size: var(--step-5); line-height: 1.02; }
 h2, .h2 { font-size: var(--step-4); line-height: 1.05; }
 h3, .h3 { font-size: var(--step-1); font-weight: 500; line-height: 1.3; letter-spacing: -0.01em; }
 h4, .h4 { font-size: var(--step-0); font-weight: 500; line-height: 1.4; }
-h1 em, h2 em, .h1 em, .h2 em, .grad { font-style: normal; font-weight: 300; color: var(--accent); background: linear-gradient(92deg, var(--accent) 0%, var(--accent-2) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+h1 em, h2 em, .h1 em, .h2 em, .grad { font-style: normal; font-weight: 300; color: var(--accent); background: linear-gradient(92deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent) 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: grad-flow 6s ease-in-out infinite; }
+@keyframes grad-flow { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
 /* When the hero title is split into words, each word carries its own gradient so the reveal can animate it. */
 .js .hero-title em.is-split { background: none; -webkit-text-fill-color: currentColor; }
-.js .hero-title em.is-split .w { background: linear-gradient(92deg, var(--accent) 0%, var(--accent-2) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.js .hero-title em.is-split .w { background: linear-gradient(92deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent) 100%); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: word-in 0.9s var(--ease-out) forwards, grad-flow 6s ease-in-out infinite; animation-delay: calc(var(--i, 0) * 65ms + 120ms), calc(var(--i, 0) * -400ms); }
 .lead { font-size: var(--step-1); line-height: 1.45; color: var(--muted); max-width: 40ch; text-wrap: pretty; }
 .muted { color: var(--muted); }
 .eyebrow {
@@ -214,7 +215,7 @@ h1 em, h2 em, .h1 em, .h2 em, .grad { font-style: normal; font-weight: 300; colo
   font-family: var(--font-mono); font-size: 0.75rem; font-weight: 500;
   letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
 }
-.eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--accent); transform-origin: left; }
+.eyebrow::before { content: ""; width: 20px; height: 1px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform-origin: left; }
 .mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
 .small { font-size: var(--step--1); }
 .prose > * + * { margin-top: 1em; }
@@ -321,9 +322,11 @@ main { position: relative; z-index: 1; }
 .brand { display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; text-decoration: none; font-family: var(--font-display); font-weight: 600; font-size: 1.5rem; letter-spacing: -0.03em; line-height: 1; }
 .brand-mark { transition: transform var(--dur) var(--ease-spring); }
 .brand:hover .brand-mark { transform: rotate(-10deg) scale(1.06); }
-.brand-mark { width: 28px; height: 28px; flex: none; }
-.brand-mark rect { fill: var(--fg); transition: fill var(--dur-theme); }
-.brand-mark path { fill: var(--bg); transition: fill var(--dur-theme); }
+.brand-mark { display: grid; place-items: center; width: 28px; height: 28px; flex: none; border-radius: 7px; background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 50%, var(--accent) 100%); background-size: 240% 240%; animation: brand-grad 7s ease-in-out infinite; }
+.brand-mark svg { width: 28px; height: 28px; }
+.brand-mark path { fill: #0A0A0A; }
+@keyframes brand-grad { 0%, 100% { background-position: 0% 0%; } 50% { background-position: 100% 100%; } }
+.brand > span { background: linear-gradient(100deg, var(--fg) 0%, var(--fg) 38%, var(--accent) 50%, var(--accent-2) 56%, var(--fg) 66%, var(--fg) 100%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 6s linear infinite; }
 .nav-desktop { display: none; align-items: center; gap: 0.25rem; }
 .nav-desktop a {
   display: inline-flex; align-items: center; min-height: 44px; padding: 0 0.9rem; border-radius: 999px;
@@ -410,7 +413,7 @@ body.menu-open { overflow: hidden; }
 .journey { position: relative; }
 .route { display: none; width: 100%; height: auto; overflow: visible; color: var(--border-strong); }
 .route-track { fill: none; stroke: currentColor; stroke-width: 1.5; }
-.route-path { fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s var(--ease-in-out); }
+.route-path { fill: none; stroke: url(#routeGrad); stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.6s var(--ease-in-out); }
 .is-active .route-path { stroke-dashoffset: 0; }
 .route-node circle.core { fill: var(--bg); stroke: var(--border-strong); stroke-width: 1.5; transition: stroke 0.4s, fill 0.4s; }
 .route-node circle.halo { fill: var(--accent); opacity: 0; transform-origin: center; transform-box: fill-box; }
@@ -526,7 +529,8 @@ body.menu-open { overflow: hidden; }
 /* --------------------------------------------------------------------------
    12. Numbers, reassurance, marquee
    -------------------------------------------------------------------------- */
-.numbers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+.numbers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: linear-gradient(90deg, var(--border) 0%, var(--accent) 35%, var(--accent-2) 50%, var(--accent) 65%, var(--border) 100%); background-size: 300% 100%; animation: grad-slide 10s linear infinite; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+@keyframes grad-slide { from { background-position: 200% 0; } to { background-position: -100% 0; } }
 .number { padding: 1.5rem 1.25rem; background: var(--bg); display: grid; gap: 0.35rem; transition: background-color var(--dur-theme); }
 .number .value { order: -1; font-family: var(--font-display); font-weight: 500; font-size: var(--step-4); line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .number .value sup { font-size: 0.45em; vertical-align: top; margin-left: 0.05em; color: var(--accent); }
@@ -915,3 +919,19 @@ html[data-theme="dark"] body::after { opacity: 0.07; }
   .hero-stage, .section-head, .journey .route { animation: none; }
 }
 @media (max-width: 899px) { .nav-pill { display: none; } }
+
+/* --------------------------------------------------------------------------
+   23. Gradient details: route stops, cursor ring, nav pill hairline, CTA glow
+   -------------------------------------------------------------------------- */
+.route .stop-a { stop-color: var(--accent); } .route .stop-b { stop-color: var(--accent-2); }
+.cursor-ring { border: 0; background: conic-gradient(from var(--beam, 0deg), var(--accent), var(--accent-2), var(--accent));
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 1.5px)); mask: radial-gradient(farthest-side, transparent calc(100% - 2.5px), #000 calc(100% - 1.5px));
+  animation: beam-spin 3s linear infinite; }
+.cursor-ring.is-link { -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px)); mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px)); }
+.nav-pill::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude; opacity: 0.7; }
+.btn-primary:hover, .btn-primary:focus-visible { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent), 0 14px 34px -14px var(--accent-2); }
+.number .value sup { background: linear-gradient(120deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+@media (prefers-reduced-motion: reduce) {
+  .brand-mark, .brand > span, h1 em, h2 em, .h1 em, .h2 em, .grad, .js .hero-title em.is-split .w, .numbers, .cursor-ring { animation: none; }
+  .brand > span { background: none; -webkit-text-fill-color: currentColor; }
+}
