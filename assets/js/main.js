@@ -123,6 +123,7 @@
           });
           node.replaceChild(frag, child);
         } else if (child.nodeType === 1) {
+          child.classList.add("is-split");
           wrapWords(child);
         }
       });
@@ -244,16 +245,32 @@
     var steps = $$(".ops-step");
     var visuals = $$(".ops-visual");
     if (!steps.length || !visuals.length) return;
+    // Prepare every stroke so it can draw itself: pathLength normalises dash units.
+    visuals.forEach(function (v) {
+      $$("path, rect, circle, line", v).forEach(function (shape, k) {
+        shape.setAttribute("pathLength", "1");
+        shape.classList.add("draw");
+        shape.style.setProperty("--i", k);
+      });
+    });
+    var current = -1;
     function setActive(i) {
+      if (i === current) return;
+      current = i;
       steps.forEach(function (s, j) { s.classList.toggle("is-active", i === j); });
       visuals.forEach(function (v, j) {
         var on = i === j;
         v.classList.toggle("is-active", on);
         v.setAttribute("aria-hidden", on ? "false" : "true");
+        if (on) { var label = $(".ops-label", v); if (label) scramble(label, true); }
       });
     }
-    setActive(0);
-    if (!supportsIO) return;
+    if (!supportsIO) { setActive(0); return; }
+    var panel = $(".ops-panel");
+    var seen = new IntersectionObserver(function (entries) {
+      if (entries.some(function (e) { return e.isIntersecting; })) { if (current < 0) setActive(0); seen.disconnect(); }
+    }, { threshold: 0.2 });
+    seen.observe(panel || steps[0]);
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) setActive(steps.indexOf(entry.target));
@@ -362,6 +379,104 @@
   }
 
   /* ------------------------------------------------------------------
+     16. Reading progress bar
+     ------------------------------------------------------------------ */
+  function initProgress() {
+    var bar = document.createElement("div");
+    bar.className = "progress";
+    bar.setAttribute("aria-hidden", "true");
+    document.body.appendChild(bar);
+    var raf = null;
+    function update() {
+      raf = null;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? clamp(window.scrollY / max, 0, 1) : 0;
+      bar.style.setProperty("--p", p.toFixed(4));
+    }
+    window.addEventListener("scroll", function () { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+    window.addEventListener("resize", function () { if (!raf) raf = requestAnimationFrame(update); });
+    update();
+  }
+
+  /* ------------------------------------------------------------------
+     17. Text scramble: mono labels "decode" into place.
+         The real text stays in a visually-hidden span for assistive tech.
+     ------------------------------------------------------------------ */
+  var GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/<>-_=+*";
+  function scramble(el, again) {
+    if (reduceMotion) return;
+    var vis = el.querySelector("[data-scramble-vis]");
+    var text;
+    if (!vis) {
+      if (el.children.length) return;
+      text = el.textContent;
+      var real = document.createElement("span");
+      real.className = "visually-hidden";
+      real.textContent = text;
+      vis = document.createElement("span");
+      vis.setAttribute("aria-hidden", "true");
+      vis.setAttribute("data-scramble-vis", "");
+      vis.textContent = text;
+      el.textContent = "";
+      el.appendChild(real);
+      el.appendChild(vis);
+      el.setAttribute("data-text", text);
+    } else {
+      if (!again && el.getAttribute("data-scrambled")) return;
+      text = el.getAttribute("data-text") || vis.textContent;
+    }
+    el.setAttribute("data-scrambled", "1");
+    var start = null, duration = 620, token = (el._scrambleToken = (el._scrambleToken || 0) + 1);
+    function frame(ts) {
+      if (token !== el._scrambleToken) return;
+      if (!start) start = ts;
+      var p = clamp((ts - start) / duration, 0, 1);
+      var settled = Math.floor(p * text.length);
+      var out = "";
+      for (var i = 0; i < text.length; i++) {
+        var c = text.charAt(i);
+        out += (i < settled || c === " " || c === "\u00B7" || c === "-") ? c : GLYPHS.charAt(Math.floor(Math.random() * GLYPHS.length));
+      }
+      vis.textContent = out;
+      if (p < 1) requestAnimationFrame(frame); else vis.textContent = text;
+    }
+    requestAnimationFrame(frame);
+  }
+  function initScramble() {
+    if (reduceMotion) return;
+    var targets = $$(".eyebrow, .hero-trust li");
+    if (!targets.length) return;
+    if (!supportsIO) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) { scramble(entry.target); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.6 });
+    targets.forEach(function (t) { io.observe(t); });
+  }
+
+  /* ------------------------------------------------------------------
+     18. Pointer tilt on cards (fine pointer only)
+     ------------------------------------------------------------------ */
+  function initTilt() {
+    if (!finePointer || reduceMotion) return;
+    $$(".product-media, .bento-card").forEach(function (card) {
+      card.classList.add("tilt");
+      card.addEventListener("pointermove", function (e) {
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - 0.5;
+        var y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.setProperty("--ty", (x * 6).toFixed(2) + "deg");
+        card.style.setProperty("--tx", (-y * 6).toFixed(2) + "deg");
+      });
+      card.addEventListener("pointerleave", function () {
+        card.style.setProperty("--tx", "0deg");
+        card.style.setProperty("--ty", "0deg");
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
   function boot() {
@@ -379,6 +494,9 @@
     initOptionalFields();
     initToc();
     initTopicParam();
+    initProgress();
+    initScramble();
+    initTilt();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();

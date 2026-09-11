@@ -5,8 +5,8 @@ Corporate showcase website for **Lizom Pro Ltd**, a UK-registered direct-to-cons
 The site has two jobs: present the brand, and stand as evidence of a real, compliant business during bank and payment-provider KYC reviews. Every page carries the full company identification required by UK law (registered name, company number, place of registration, registered office, contact email).
 
 - Plain HTML, CSS and JavaScript. **No build step, no framework, no dependencies.**
-- Design: Resend × Mercury. Dark sections for brand and proof, light sections for catalogue, operations and legal. The page switches scheme as you scroll.
-- Fonts self-hosted (Geist, Geist Mono, Instrument Serif). No request to Google Fonts, no cookies, no analytics.
+- Design: Resend × Mercury. Dark sections for brand and proof, light sections for catalogue, operations and legal. The page switches scheme as you scroll. Motion layer: word-by-word hero reveal, 3D product stage, animated dot grid and scan line, SVG order route with a travelling parcel, self-drawing operation illustrations, rotating border beams, decoding mono labels, pointer tilt on cards, reading progress bar, film grain on dark sections. Everything is static under `prefers-reduced-motion`.
+- Fonts self-hosted (Space Grotesk for headings, Geist for text, Geist Mono for labels). No request to Google Fonts, no cookies, no analytics.
 - Accessible (WCAG AA contrast, keyboard navigation, visible focus, reduced-motion support), responsive (375 / 768 / 1440), SEO-ready (unique titles and descriptions, Organization JSON-LD, sitemap, robots).
 
 ## Structure
