@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000" role="img" aria-label="Placeholder: PRODUCT 5 · Daily face cream, 800 by 1000 pixels">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E9E6DF"/><stop offset="1" stop-color="#D8D4CB"/></linearGradient>
+    <pattern id="p" width="28" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="28" stroke="#C9C6BC" stroke-width="1" opacity="0.5"/></pattern>
+  </defs>
+  <rect width="800" height="1000" fill="url(#g)"/>
+  <rect width="800" height="1000" fill="url(#p)"/>
+  <rect x="48" y="60" width="704" height="880" fill="none" stroke="#C9C6BC" stroke-width="1.5" stroke-dasharray="6 6"/>
+  <g font-family="Geist Mono, ui-monospace, Menlo, monospace" text-anchor="middle">
+    <text x="400" y="489" font-size="28" fill="#5C6079" font-weight="500">PRODUCT 5 · Daily face cream</text>
+    <text x="400" y="531" font-size="21" fill="#8A8DA0" letter-spacing="2">800 × 1000 · REPLACE WITH REAL PHOTO</text>
+  </g>
+</svg>
