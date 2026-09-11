@@ -388,7 +388,7 @@ body.menu-open { overflow: hidden; }
 .fcard { --depth: 1; --x: 0; --y: 0; position: absolute; left: var(--x); top: var(--y); width: var(--w, 34%); transform: translate3d(calc(var(--px) * var(--depth)), calc(var(--py) * var(--depth)), 0); will-change: transform; }
 .fcard-inner { animation: float var(--fd, 7s) ease-in-out infinite; animation-delay: var(--fdelay, 0s); border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); padding: 0.5rem; box-shadow: 0 30px 60px -30px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.02) inset; }
 .fcard img { aspect-ratio: 4 / 5; width: 100%; object-fit: cover; border-radius: calc(var(--radius) - 4px); background: var(--surface-2); }
-.fcard figcaption { display: flex; justify-content: space-between; gap: 0.5rem; padding: 0.6rem 0.3rem 0.2rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--muted); }
+.fcard figcaption { display: flex; flex-direction: column; gap: 0.15rem; padding: 0.6rem 0.3rem 0.2rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--muted); }
 .fcard figcaption b { font-weight: 500; color: var(--fg); }
 .js .fcard { opacity: 0; animation: card-in 1s var(--ease-out) forwards; animation-delay: calc(var(--i, 0) * 120ms + 300ms); }
 @keyframes card-in { from { opacity: 0; transform: translate3d(0, 40px, 0) scale(0.96); } to { opacity: 1; transform: translate3d(calc(var(--px) * var(--depth)), calc(var(--py) * var(--depth)), 0); } }
