@@ -178,16 +178,18 @@
   function initJourney() {
     var journey = $(".journey");
     if (!journey) return;
-    var motion = $(".route-dot animateMotion", journey);
-    var dot = $(".route-dot", journey);
+    var dots = $$(".route-dot", journey);
     function activate() {
       journey.classList.add("is-active");
-      if (motion && dot && !reduceMotion && typeof motion.beginElement === "function") {
+      if (reduceMotion) return;
+      dots.forEach(function (dot, i) {
+        var motion = $("animateMotion", dot);
+        if (!motion || typeof motion.beginElement !== "function") return;
         setTimeout(function () {
           dot.classList.add("is-running");
           try { motion.beginElement(); } catch (err) { /* SMIL unsupported: static route */ }
-        }, 600);
-      }
+        }, 600 + i * 3200);
+      });
     }
     if (!supportsIO || reduceMotion) { activate(); return; }
     var io = new IntersectionObserver(function (entries) {
@@ -262,7 +264,7 @@
         var on = i === j;
         v.classList.toggle("is-active", on);
         v.setAttribute("aria-hidden", on ? "false" : "true");
-        if (on) { var label = $(".ops-label", v); if (label) scramble(label, true); }
+        if (on) { var label = $(".ops-label", v); if (label) scramble(label, true); var idx = $(".ops-index", v); if (idx) scramble(idx, true); }
       });
     }
     if (!supportsIO) { setActive(0); return; }
@@ -477,6 +479,60 @@
   }
 
   /* ------------------------------------------------------------------
+     19. Cursor ring (fine pointer only; native cursor is kept)
+     ------------------------------------------------------------------ */
+  function initCursor() {
+    if (!finePointer || reduceMotion) return;
+    var ring = document.createElement("div");
+    ring.className = "cursor-ring";
+    ring.setAttribute("aria-hidden", "true");
+    document.body.appendChild(ring);
+    var target = { x: -100, y: -100 }, state = { x: -100, y: -100 }, raf = null;
+    function tick() {
+      state.x += (target.x - state.x) * 0.35;
+      state.y += (target.y - state.y) * 0.35;
+      ring.style.setProperty("--cx", state.x.toFixed(1) + "px");
+      ring.style.setProperty("--cy", state.y.toFixed(1) + "px");
+      raf = (Math.abs(target.x - state.x) < 0.3 && Math.abs(target.y - state.y) < 0.3) ? null : requestAnimationFrame(tick);
+    }
+    window.addEventListener("pointermove", function (e) {
+      target.x = e.clientX; target.y = e.clientY;
+      ring.classList.add("is-on");
+      ring.classList.toggle("is-link", !!e.target.closest("a, button, [role=button], input, select, textarea, label"));
+      if (!raf) raf = requestAnimationFrame(tick);
+    }, { passive: true });
+    window.addEventListener("pointerdown", function () { ring.classList.add("is-down"); });
+    window.addEventListener("pointerup", function () { ring.classList.remove("is-down"); });
+    document.addEventListener("pointerleave", function () { ring.classList.remove("is-on"); });
+  }
+
+  /* ------------------------------------------------------------------
+     20. Desktop nav: a pill glides between links
+     ------------------------------------------------------------------ */
+  function initNavPill() {
+    var nav = $(".nav-desktop");
+    if (!nav || !finePointer) return;
+    var pill = document.createElement("span");
+    pill.className = "nav-pill";
+    pill.setAttribute("aria-hidden", "true");
+    nav.appendChild(pill);
+    nav.classList.add("has-pill");
+    var links = $$("a", nav);
+    var current = links.filter(function (l) { return l.getAttribute("aria-current") === "page"; })[0] || null;
+    function moveTo(link) {
+      if (!link) { pill.classList.remove("is-on"); return; }
+      var nr = nav.getBoundingClientRect(), r = link.getBoundingClientRect();
+      pill.style.left = (r.left - nr.left) + "px";
+      pill.style.width = r.width + "px";
+      pill.classList.add("is-on");
+    }
+    links.forEach(function (l) { l.addEventListener("pointerenter", function () { moveTo(l); }); });
+    nav.addEventListener("pointerleave", function () { moveTo(current); });
+    window.addEventListener("resize", function () { moveTo(current); });
+    if (current) { pill.style.transition = "none"; moveTo(current); requestAnimationFrame(function () { pill.style.transition = ""; }); }
+  }
+
+  /* ------------------------------------------------------------------
      Boot
      ------------------------------------------------------------------ */
   function boot() {
@@ -497,6 +553,8 @@
     initProgress();
     initScramble();
     initTilt();
+    initCursor();
+    initNavPill();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();

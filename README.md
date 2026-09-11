@@ -62,37 +62,37 @@ grep -rn "{{" --include=*.html --include=*.js --include=*.json .
 
 ### Contact form (Web3Forms)
 
-1. Go to https://web3forms.com, enter `hello@getlizom.com`, confirm the email you receive. No account or password.
+1. Go to https://web3forms.com and enter the address that should **receive** the messages: `themoneylab54@gmail.com`. Click the confirmation link in the email you get. No account, no password. The key only delivers to that address, so it is safe to publish in the JavaScript.
 2. Copy the access key into `assets/js/contact.js`:
    ```js
    var WEB3FORMS_ACCESS_KEY = "paste-your-key-here";
    ```
 3. Free plan: 250 submissions per month. The key is public by design; it can only deliver to the address it was created for. A honeypot field and client-side validation are already in place.
 
-Until the key is set, the form shows an explicit error asking visitors to email hello@getlizom.com directly.
+Until the key is set, the form shows an explicit error asking visitors to email hello@getlizom.com directly. Make sure the public address `hello@getlizom.com` exists (or forwards to your inbox): it is printed on every page and compliance reviewers do test it.
 
 ### Images
 
-All images are labelled SVG placeholders showing the expected dimensions. Replace them with real photos (WebP or AVIF, same aspect ratio) and keep the file names, or update the `src` attributes:
+The 22 visuals in `assets/img/` are illustrated process scenes (WebP, exact display sizes): specification sheets, swatches, shelving, parcels, delivery routes, a fulfilment floor. They are generated, not photographed, and deliberately show the process rather than garments. To replace any of them with a photo, keep the file name and aspect ratio:
 
 | File(s) | Size | Use |
 |---|---|---|
-| `assets/img/hero-01.svg` … `hero-05.svg` | 800 × 1000 | Floating product cards in the home hero (portrait) |
-| `assets/img/cat-lingerie.svg`, `cat-lingerie-alt.svg` | 1200 × 1400 | Lingerie category card and its hover image |
-| `assets/img/cat-clothing.svg`, `-alt.svg` | 1000 × 800 | Clothing category card |
-| `assets/img/cat-skincare.svg`, `-alt.svg` | 1000 × 800 | Skincare category card |
-| `assets/img/cat-accessories.svg`, `-alt.svg` | 1000 × 700 | Accessories banner card |
-| `assets/img/product-01.svg` … `product-08.svg` | 800 × 1000 | Selected products grid |
-| `assets/img/about-story.svg` | 1400 × 800 | About page photo |
-| `assets/img/og-image.png` | 1200 × 630 | Social sharing image (a typographic version is generated; replace with a photo if you prefer) |
-| `assets/img/logo-192.png`, `logo-512.png` | 192 / 512 | Manifest and JSON-LD logo |
+| `hero-01.webp` … `hero-05.webp` | 800 × 1000 | Floating cards in the home hero (dark ground) |
+| `process-01.webp` … `process-08.webp` | 800 × 1000 | The eight-step process grid |
+| `cat-lingerie.webp`, `-alt.webp` | 1200 × 1400 | Lingerie category card and its hover image |
+| `cat-clothing.webp`, `-alt.webp` | 1000 × 800 | Clothing category card |
+| `cat-skincare.webp`, `-alt.webp` | 1000 × 800 | Skincare category card |
+| `cat-accessories.webp`, `-alt.webp` | 1000 × 700 | Accessories banner card |
+| `about-story.webp` | 1400 × 800 | About page: the fulfilment floor |
+| `og-image.png` | 1200 × 630 | Social sharing image |
+| `logo-192.png`, `logo-512.png` | 192 / 512 | Manifest and JSON-LD logo |
 
 ## Deploy
 
 The site is static; push the repository and point the host at the root directory. Clean URLs work out of the box because each page lives in its own folder (`/about/index.html` → `/about/`).
 
-**Vercel**
-1. vercel.com → Add New → Project → import the GitHub repository.
+**Vercel** (recommended)
+1. vercel.com → Add New → Project → Import Git Repository → pick `themoneylab54-blip/Lizom-ltd` and the branch you want to deploy (`main` after merging, or `claude/elegant-babbage-ybihz8` to preview).
 2. Framework preset: *Other*. Build command: empty. Output directory: `.` (root).
 3. Deploy. `vercel.json` adds security headers and clean URLs.
 4. Settings → Domains → add `getlizom.com` and `www.getlizom.com`, then create the DNS records Vercel shows (A record for the apex, CNAME for www).

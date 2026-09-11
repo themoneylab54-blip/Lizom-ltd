@@ -1,7 +1,8 @@
 /* ==========================================================================
    Lizom — contact.js
-   Sends the contact form to hello@getlizom.com through Web3Forms.
-   1. Create a free access key at https://web3forms.com with hello@getlizom.com
+   Sends the contact form through Web3Forms to the inbox the access key
+   was created for (themoneylab54@gmail.com, see README).
+   1. Create a free access key at https://web3forms.com with that address
    2. Paste it below, replacing the placeholder. The key is public by design:
       it can only send mail to the address it was created for.
    ========================================================================== */

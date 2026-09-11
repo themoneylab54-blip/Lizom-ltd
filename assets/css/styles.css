@@ -843,3 +843,75 @@ html[data-theme="dark"] body::after { opacity: 0.07; }
   .tilt { transform: none; }
   .js .is-visible .eyebrow::before, .js .hero .eyebrow::before, .js .page-hero .eyebrow::before { animation: none; }
 }
+
+/* --------------------------------------------------------------------------
+   22. Motion layer II: cursor ring, nav pill, shine, ken burns, wipe reveals,
+       parallax (scroll-driven), shimmer wordmark, glare on hero cards
+   -------------------------------------------------------------------------- */
+/* Cursor ring (fine pointers only; the native cursor stays) */
+.cursor-ring { position: fixed; top: 0; left: 0; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; border: 1.5px solid var(--accent); z-index: 2000; pointer-events: none; opacity: 0;
+  transform: translate3d(var(--cx, -100px), var(--cy, -100px), 0) scale(var(--cs, 1)); transition: opacity 0.4s, transform 0.12s linear, border-color var(--dur-theme), background-color var(--dur-fast); }
+.cursor-ring.is-on { opacity: 0.9; }
+.cursor-ring.is-link { --cs: 1.7; background: color-mix(in srgb, var(--accent) 14%, transparent); border-color: var(--accent-2); }
+.cursor-ring.is-down { --cs: 0.8; }
+
+/* Nav: a pill that glides between links */
+.nav-desktop { position: relative; }
+.nav-pill { position: absolute; top: 50%; left: 0; height: 44px; width: 0; border-radius: 999px; background: color-mix(in srgb, var(--fg) 7%, transparent); transform: translateY(-50%); opacity: 0; transition: left 0.35s var(--ease-spring), width 0.35s var(--ease-spring), opacity 0.25s; pointer-events: none; }
+.nav-pill.is-on { opacity: 1; }
+.nav-desktop.has-pill a[aria-current="page"] { background: transparent; }
+
+/* Primary buttons: shine sweep on hover */
+.btn-primary { overflow: hidden; }
+.btn-primary::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, transparent 30%, color-mix(in srgb, var(--btn-fg) 18%, transparent) 50%, transparent 70%); transform: translateX(-120%); transition: transform 0.7s var(--ease-out); pointer-events: none; }
+.btn-primary:hover::after { transform: translateX(120%); }
+
+/* Category images breathe slowly even at rest */
+.bento-media img.main { animation: ken-burns 16s ease-in-out infinite alternate; }
+@keyframes ken-burns { from { transform: scale(1); } to { transform: scale(1.07) translate(-1%, -1%); } }
+.bento-card:hover .bento-media img.main { animation-play-state: paused; }
+
+/* Process cards: wipe up instead of a plain fade */
+.js .products.reveal-group > * { clip-path: inset(0 0 100% 0 round var(--radius)); transform: translateY(24px); transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out), clip-path 0.9s var(--ease-out); }
+.js .products.reveal-group.is-visible > * { clip-path: inset(0 0 0 0 round var(--radius)); }
+.product-media img { animation: ken-burns 18s ease-in-out infinite alternate; }
+
+/* Numbers: lift on hover */
+.number { transition: background-color var(--dur-theme), transform var(--dur) var(--ease-out); }
+.number:hover { transform: translateY(-3px); background: var(--surface); }
+
+/* Hero cards: a glare sweeps across each card */
+.fcard-inner { position: relative; overflow: hidden; }
+.fcard-inner::after { content: ""; position: absolute; inset: -40%; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.10) 50%, transparent 60%); transform: translateX(-60%); animation: glare 9s var(--ease-in-out) infinite; animation-delay: var(--fdelay, 0s); pointer-events: none; }
+@keyframes glare { 0%, 60% { transform: translateX(-60%); } 100% { transform: translateX(60%); } }
+
+/* Footer wordmark shimmer */
+.wordmark { background: linear-gradient(100deg, var(--fg) 0%, var(--fg) 40%, var(--accent) 50%, var(--accent-2) 55%, var(--fg) 65%, var(--fg) 100%); background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; animation: shimmer 7s linear infinite; }
+@keyframes shimmer { from { background-position: 120% 0; } to { background-position: -130% 0; } }
+
+/* Second marquee row runs the other way */
+.marquee + .marquee { border-top: 0; }
+.marquee-track--reverse { animation-direction: reverse; animation-duration: 75s; }
+
+/* Aurora glow re-used inside dark sections */
+.section > .hero-glow { top: auto; bottom: -30%; right: auto; left: -10%; opacity: 0.35; }
+
+/* Scroll-driven parallax where the browser supports it */
+@supports (animation-timeline: scroll()) {
+  .hero-stage { animation: stage-parallax linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+  @keyframes stage-parallax { to { transform: translateY(18vh); } }
+  .section-head { animation: head-rise linear both; animation-timeline: view(); animation-range: entry 0% entry 45%; }
+  @keyframes head-rise { from { transform: translateY(40px); opacity: 0.2; } to { transform: none; opacity: 1; } }
+  .journey .route { animation: route-drift linear both; animation-timeline: view(); animation-range: entry 0% exit 100%; }
+  @keyframes route-drift { from { transform: translateY(30px); } to { transform: translateY(-30px); } }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring { display: none; }
+  .bento-media img.main, .product-media img, .fcard-inner::after, .wordmark { animation: none; }
+  .wordmark { background: none; -webkit-text-fill-color: currentColor; }
+  .js .products.reveal-group > * { clip-path: none; transform: none; }
+  .btn-primary::after { display: none; }
+  .hero-stage, .section-head, .journey .route { animation: none; }
+}
+@media (max-width: 899px) { .nav-pill { display: none; } }
