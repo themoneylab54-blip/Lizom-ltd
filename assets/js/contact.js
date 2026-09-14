@@ -2,14 +2,16 @@
    Lizom — contact.js
    Sends the contact form through Web3Forms to the inbox the access key
    was created for (themoneylab54@gmail.com, see README).
-   1. Create a free access key at https://web3forms.com with that address
-   2. Paste it below, replacing the placeholder. The key is public by design:
-      it can only send mail to the address it was created for.
+   1. Create a free access key at https://web3forms.com with that address.
+   2. Paste it between the quotes below. The key is public by design: it can
+      only send mail to the address it was created for.
+   While the constant is empty the form stays usable and shows an explicit
+   message asking visitors to email hello@getlizom.com instead.
    ========================================================================== */
 (function () {
   "use strict";
 
-  var WEB3FORMS_ACCESS_KEY = "{{WEB3FORMS_ACCESS_KEY}}";
+  var WEB3FORMS_ACCESS_KEY = "";
   var ENDPOINT = "https://api.web3forms.com/submit";
   var CONTACT_EMAIL = "hello@getlizom.com";
 
@@ -95,7 +97,7 @@
     // Honeypot: bots fill it, humans never see it.
     if (form.elements.botcheck && form.elements.botcheck.checked) return;
 
-    if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY.indexOf("{{") !== -1) {
+    if (!WEB3FORMS_ACCESS_KEY) {
       showStatus("error", "The contact form is not connected yet. Please email us directly at <a href=\"mailto:" + CONTACT_EMAIL + "\">" + CONTACT_EMAIL + "</a>.");
       return;
     }

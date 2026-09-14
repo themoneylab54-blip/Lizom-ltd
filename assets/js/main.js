@@ -332,19 +332,7 @@
   }
 
   /* ------------------------------------------------------------------
-     13. Optional legal fields: show only once the placeholder is filled
-     ------------------------------------------------------------------ */
-  function initOptionalFields() {
-    $$("[data-optional]").forEach(function (row) {
-      var value = row.querySelector("[data-value]");
-      var text = value ? value.textContent.trim() : "";
-      var filled = text && text.indexOf("{{") === -1;
-      row.hidden = !filled;
-    });
-  }
-
-  /* ------------------------------------------------------------------
-     14. Table of contents scroll-spy (legal pages)
+     13. Table of contents scroll-spy (legal pages)
      ------------------------------------------------------------------ */
   function initToc() {
     var toc = $(".toc");
@@ -369,7 +357,7 @@
   }
 
   /* ------------------------------------------------------------------
-     15. Contact page: preselect topic from ?topic=
+     14. Contact page: preselect topic from ?topic=
      ------------------------------------------------------------------ */
   function initTopicParam() {
     var select = $("#subject");
@@ -383,7 +371,7 @@
   }
 
   /* ------------------------------------------------------------------
-     16. Reading progress bar
+     15. Reading progress bar
      ------------------------------------------------------------------ */
   function initProgress() {
     var bar = document.createElement("div");
@@ -403,7 +391,7 @@
   }
 
   /* ------------------------------------------------------------------
-     17. Text scramble: mono labels "decode" into place.
+     16. Text scramble: mono labels "decode" into place.
          The real text stays in a visually-hidden span for assistive tech.
      ------------------------------------------------------------------ */
   var GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/<>-_=+*";
@@ -460,7 +448,7 @@
   }
 
   /* ------------------------------------------------------------------
-     18. Pointer tilt on cards (fine pointer only)
+     17. Pointer tilt on cards (fine pointer only)
      ------------------------------------------------------------------ */
   function initTilt() {
     if (!finePointer || reduceMotion) return;
@@ -481,7 +469,7 @@
   }
 
   /* ------------------------------------------------------------------
-     19. Cursor ring (fine pointer only; native cursor is kept)
+     18. Cursor ring (fine pointer only; native cursor is kept)
      ------------------------------------------------------------------ */
   function initCursor() {
     if (!finePointer || reduceMotion) return;
@@ -509,7 +497,7 @@
   }
 
   /* ------------------------------------------------------------------
-     20. Desktop nav: a pill glides between links
+     19. Desktop nav: a pill glides between links
      ------------------------------------------------------------------ */
   function initNavPill() {
     var nav = $(".nav-desktop");
@@ -549,7 +537,6 @@
     initOps();
     initMagnetic();
     initHalo();
-    initOptionalFields();
     initToc();
     initTopicParam();
     initProgress();

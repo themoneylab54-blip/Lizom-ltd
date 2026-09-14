@@ -43,25 +43,37 @@ npx --yes serve . -l 3000      # http://localhost:3000
 python3 -m http.server 3000
 ```
 
+## Company details on the site
+
+The registration details below are published on every page (footer and mobile menu), in the legal notice, the privacy policy, the terms of sale, the contact page, the about page, and in the Organization JSON-LD of every page. They match the public Companies House record. Change them in one place only: the page sources, then rebuild.
+
+| Field | Value |
+|---|---|
+| Legal name | Lizom Pro Ltd |
+| Company number | 17457041 |
+| Place of registration | England and Wales |
+| Date of incorporation | 14 September 2026 |
+| Legal form | Private company limited by shares |
+| Registered office | Unit A, 82 James Carter Road, Mildenhall, IP28 7DE, United Kingdom |
+| SIC codes | 47910, 47710, 47750, 47990 |
+| VAT | Not registered. The legal notice says so explicitly; no VAT number is shown |
+| Contact email | hello@getlizom.com |
+
 ## Before going live
 
-Search the code for `{{` and replace each placeholder:
+No template placeholders remain in the code. Two things still need a value from you:
 
-| Placeholder | Where | What to put |
+| What | Where | What to put |
 |---|---|---|
-| `{{COMPANY_NUMBER}}` | every page (footer, legal, contact, about, JSON-LD) | Companies House number |
-| `{{WEB3FORMS_ACCESS_KEY}}` | `assets/js/contact.js`, first constant | Access key from web3forms.com, created with hello@getlizom.com |
-| `{{NUMERO_TVA}}` | `legal/index.html` | VAT number. The row stays hidden until the placeholder is replaced |
-| `{{EU_REPRESENTATIVE}}` | `privacy/index.html` | Name and address of the Article 27 GDPR representative, if appointed. Hidden until replaced |
+| Web3Forms access key | `assets/js/contact.js`, first constant (currently an empty string) | Key from web3forms.com, created with the inbox that should receive messages |
+| VAT number, later | `legal/index.html`, the VAT status row | Only once HMRC registration takes effect. Until then the page states the company is not registered |
+| EU representative, if appointed | `privacy/index.html`, the Article 27 section | Name and address of the representative. An HTML comment marks the spot |
 
-```bash
-grep -rn "{{" --include=*.html --include=*.js --include=*.json .
-```
 
 ### Contact form (Web3Forms)
 
 1. Go to https://web3forms.com and enter the address that should **receive** the messages: `themoneylab54@gmail.com`. Click the confirmation link in the email you get. No account, no password. The key only delivers to that address, so it is safe to publish in the JavaScript.
-2. Copy the access key into `assets/js/contact.js`:
+2. Copy the access key into `assets/js/contact.js`, replacing the empty string:
    ```js
    var WEB3FORMS_ACCESS_KEY = "paste-your-key-here";
    ```
