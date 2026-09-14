@@ -61,13 +61,17 @@ The registration details below are published on every page (footer and mobile me
 
 ## Before going live
 
-No template placeholders remain in the code. Two things still need a value from you:
+One template placeholder remains on purpose, `{{ADRESSE_RETOUR}}` in the terms of sale, because the fulfilment address is not settled yet. These are the values still to supply:
 
 | What | Where | What to put |
 |---|---|---|
-| Web3Forms access key | `assets/js/contact.js`, first constant (currently an empty string) | Key from web3forms.com, created with the inbox that should receive messages |
+| **Mailbox for hello@getlizom.com** | DNS zone at the host | The domain has no MX record today, so hello@getlizom.com bounces. Create the mailbox or a forward, then add the MX records. Required: the address is printed on every page |
+| **Web3Forms access key** | `assets/js/contact.js`, first constant (currently an empty string) | Key from web3forms.com, created with the inbox that should receive messages. Until it is set the form refuses to send and tells visitors to email instead |
+| **Return address** | `terms/index.html`, returns section, inside the block commented `RETURN ADDRESS` | The postal address of the fulfilment partner that receives parcels. Replace `{{ADRESSE_RETOUR}}` and remove the comment markers. Never the Mildenhall registered office: it is a registered-office service that refuses parcels |
 | VAT number, later | `legal/index.html`, the VAT status row | Only once HMRC registration takes effect. Until then the page states the company is not registered |
 | EU representative, if appointed | `privacy/index.html`, the Article 27 section | Name and address of the representative. An HTML comment marks the spot |
+
+The first three matter to a bank or payment-provider reviewer: they email the published address, they submit the contact form, and they check that a customer can actually return goods.
 
 
 ### Contact form (Web3Forms)
