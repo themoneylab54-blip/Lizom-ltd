@@ -101,6 +101,15 @@ The 22 visuals in `assets/img/` are illustrated process scenes (WebP, exact disp
 | `og-image.png` | 1200 × 630 | Social sharing image |
 | `logo-192.png`, `logo-512.png` | 192 / 512 | Manifest and JSON-LD logo |
 
+## Meta (Facebook) domain verification
+
+The domain is verified for Meta Business Manager by two independent methods, both carrying the same token `zdapmle4pcmg248af4pdpmyy98yct5`. Keep both: Meta re-checks periodically and removing them can un-verify the domain.
+
+1. **HTML file** at `zdapmle4pcmg248af4pdpmyy98yct5.html` in the site root, served at `https://getlizom.com/zdapmle4pcmg248af4pdpmyy98yct5.html`. It contains the token alone, 30 bytes, no trailing newline. Do not edit or reformat it.
+2. **Meta tag** `<meta name="facebook-domain-verification">` in the `<head>` of every page, added by the shared head in the page builder. It must stay static markup inside `<head>`: Meta rejects a token injected by JavaScript or placed outside the head.
+
+If verification fails, check that the host is not rewriting `.html` URLs. On Netlify that is Asset optimization, Pretty URLs; on Vercel it is `cleanUrls` in `vercel.json`, which is currently `true` and would redirect the file URL to its extensionless form.
+
 ## Deploy
 
 The site is static; push the repository and point the host at the root directory. Clean URLs work out of the box because each page lives in its own folder (`/about/index.html` → `/about/`).
