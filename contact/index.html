@@ -153,9 +153,6 @@
     <div class="container">
       <div class="contact-layout">
         <div class="reveal">
-          <h2 id="form-title" class="h2-sm mb-2">Write to us</h2>
-          <p class="muted mb-8">One address, read by the team every business day. We reply within two business days, in English or French.</p>
-
           <div class="card mb-8">
             <p class="eyebrow mb-4">Registered company</p>
             <p class="company-name">LIZOM PRO LTD</p>
@@ -163,24 +160,73 @@
             <p class="muted mt-4">Registered in England and Wales, company number <span class="mono">17457041</span>.</p>
           </div>
 
-          <div class="card">
-            <p class="eyebrow mb-4">Email</p>
-            <p class="contact-email"><a href="mailto:hello@getlizom.com">hello@getlizom.com</a></p>
-            <p class="muted mt-4">Monday to Friday, 9:00 to 18:00 CET.</p>
-          </div>
+          <h2 id="form-title" class="h2-sm mb-2">Send us a message</h2>
+          <p class="muted mb-8">Every field is required. Messages go straight to hello@getlizom.com and we reply within two business days, in English or French.</p>
 
-          <div class="mt-8">
-            <p class="eyebrow mb-4">What to put in your message</p>
-            <ul class="checklist">
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span><strong>An order question.</strong> Your order number, the country it was delivered to, and the sizes involved.</span></li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span><strong>A return.</strong> Your order number and the item you want to send back. We reply the same business day with the return address and instructions.</span></li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span><strong>A product question.</strong> The product name. For cosmetics, tell us which ingredient you are checking.</span></li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Partnership, wholesale or press.</strong> Your company and what you are looking for.</span></li>
-              <li><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Compliance or verification.</strong> The documents you need. See the panel opposite.</span></li>
-            </ul>
-          </div>
+          <form id="contact-form" class="form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+            <div class="honeypot" aria-hidden="true">
+              <label for="botcheck">Leave this field empty</label>
+              <input id="botcheck" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off">
+            </div>
 
-          <p class="notice-placeholder mt-8">Lizom Pro Ltd processes the details you send only to answer you, as described in the <a href="/privacy/">privacy policy</a>. We never pass them to a third party for marketing.</p>
+            <div class="grid grid-2">
+              <div class="field">
+                <label for="name">Name <span class="req">Required</span></label>
+                <input class="input" id="name" name="name" type="text" autocomplete="name" required minlength="2" placeholder="Your full name">
+                <p class="field-error"><span class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg></span><span class="field-error-text"></span></p>
+              </div>
+              <div class="field">
+                <label for="email">Email <span class="req">Required</span></label>
+                <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" required placeholder="name@example.com">
+                <p class="field-error"><span class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg></span><span class="field-error-text"></span></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="subject">Subject <span class="req">Required</span></label>
+              <select class="select" id="subject" name="subject" required>
+                <option value="">Choose a subject</option>
+                <option value="Order or delivery">Order or delivery</option>
+                <option value="Returns and refunds">Returns and refunds</option>
+                <option value="Product question">Product question</option>
+                <option value="Partnership or wholesale">Partnership or wholesale</option>
+                <option value="Press">Press</option>
+                <option value="Compliance or verification">Compliance or verification</option>
+                <option value="Something else">Something else</option>
+              </select>
+              <p class="field-error"><span class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg></span><span class="field-error-text"></span></p>
+            </div>
+
+            <div class="field">
+              <label for="message">Message <span class="req">Required</span></label>
+              <textarea class="textarea" id="message" name="message" required minlength="10" placeholder="Tell us what you need. If it is about an order, include the order number."></textarea>
+              <p class="hint">Include your order number, your country and any sizes involved, so we can answer in one go.</p>
+              <p class="field-error"><span class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg></span><span class="field-error-text"></span></p>
+            </div>
+
+            <div class="field">
+              <div class="check">
+                <input id="consent" name="consent" type="checkbox" required>
+                <label for="consent">I agree that Lizom Pro Ltd may process the details above to answer my message, as described in the <a href="/privacy/">privacy policy</a>. I can withdraw this consent at any time by emailing hello@getlizom.com.</label>
+              </div>
+              <p class="field-error"><span class="icon-wrap"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg></span><span class="field-error-text"></span></p>
+            </div>
+
+            <div id="form-status" class="form-status" role="status" aria-live="polite" tabindex="-1">
+              <span class="icon-success"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg></span>
+              <span class="icon-error" hidden><svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg></span>
+              <span class="form-status-text"></span>
+            </div>
+
+            <div class="form-footer">
+              <button class="btn btn-primary btn-magnetic" type="submit">
+                <span class="btn-label">Send message</span>
+                <svg class="icon icon-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                <span class="spinner" hidden aria-hidden="true"></span>
+              </button>
+              <span class="small">Or write directly to <a href="mailto:hello@getlizom.com">hello@getlizom.com</a></span>
+            </div>
+          </form>
         </div>
 
         <aside class="contact-aside reveal-group" aria-label="Company details">
@@ -256,6 +302,6 @@
   </div>
 </footer>
 <script src="/assets/js/main.js" defer></script>
-
+<script src="/assets/js/contact.js" defer></script>
 </body>
 </html>

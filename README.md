@@ -72,13 +72,17 @@ One template placeholder remains on purpose, `{{ADRESSE_RETOUR}}` in the terms o
 The first three matter to a bank or payment-provider reviewer: they email the published address, they submit the contact form, and they check that a customer can actually return goods.
 
 
-### Contact
+### Contact form
 
-The site carries no contact form. A form that cannot deliver is worse than no form: it shows an error to anyone who tries it, which is a standard rejection reason for Meta Business verification and for bank onboarding. The contact page instead shows `hello@getlizom.com` prominently, with the full company record beside it.
+The contact page carries a working form, delivered by **Web3Forms** on its free plan: 250 messages a month, no account, no server to run. Messages arrive at `hello@getlizom.com`, which forwards to the team inbox through ImprovMX.
 
-**The one thing that must be done: make hello@getlizom.com receive mail.** The domain has no MX record today, so anything sent to that address bounces, and the address is printed on every page. Create a mailbox or a forward to an inbox you read, then add the MX records to the DNS zone.
+The access key sits at the top of `assets/js/contact.js`. It is public by design and safe to ship: Web3Forms only ever delivers to the mailbox that created the key, so it cannot be used to send mail anywhere else.
 
-Once that inbox works, a contact form can be added back in minutes with any no-backend form service.
+The form validates on the client, disables the button and shows a spinner while sending, clears itself on success, and on failure tells the visitor exactly what went wrong and offers the email address instead. A honeypot field catches bots. Web3Forms is declared as a data processor in the privacy policy, as it must be.
+
+The content security policy allows `https://api.web3forms.com` in `connect-src` and `form-action`. If you ever change form provider, update those two directives in `_headers`, `netlify.toml` and `vercel.json`.
+
+**Email delivery.** `hello@getlizom.com` has no mailbox of its own: ImprovMX forwards it, using the MX records `mx1.improvmx.com` (priority 10) and `mx2.improvmx.com` (priority 20), plus an SPF record. Aliases `hello` and the catch-all `*` both point to the team inbox.
 
 ### Images
 
