@@ -15,7 +15,7 @@ The site has two jobs: present the brand, and stand as evidence of a real, compl
 .
 ├── index.html                  Home
 ├── about/index.html            About: story, operating model, standards
-├── contact/index.html          Contact form (Web3Forms) + company details
+├── contact/index.html          Contact page: email address + full company record
 ├── legal/index.html            Legal notice (company information, hosting, IP, law)
 ├── privacy/index.html          Privacy policy (UK GDPR + EU GDPR, cookies section)
 ├── terms/index.html            Terms of sale (prices, delivery, 14-day returns, guarantees)
@@ -23,7 +23,6 @@ The site has two jobs: present the brand, and stand as evidence of a real, compl
 ├── assets/
 │   ├── css/styles.css          Design tokens, components, animations, reduced-motion, print
 │   ├── js/main.js              Scheme switch, reveals, hero stage, order route, counters, menu, TOC
-│   ├── js/contact.js           Contact form: validation, loading, success/error, Web3Forms
 │   ├── fonts/*.woff2           Self-hosted fonts (latin subset)
 │   └── img/                    Placeholder SVGs (labelled with expected sizes), OG image, logos
 ├── favicon.svg, favicon-32.png, apple-touch-icon.png, site.webmanifest
@@ -66,7 +65,6 @@ One template placeholder remains on purpose, `{{ADRESSE_RETOUR}}` in the terms o
 | What | Where | What to put |
 |---|---|---|
 | **Mailbox for hello@getlizom.com** | DNS zone at the host | The domain has no MX record today, so hello@getlizom.com bounces. Create the mailbox or a forward, then add the MX records. Required: the address is printed on every page |
-| **Web3Forms access key** | `assets/js/contact.js`, first constant (currently an empty string) | Key from web3forms.com, created with the inbox that should receive messages. Until it is set the form refuses to send and tells visitors to email instead |
 | **Return address** | `terms/index.html`, returns section, inside the block commented `RETURN ADDRESS` | The postal address of the fulfilment partner that receives parcels. Replace `{{ADRESSE_RETOUR}}` and remove the comment markers. Never the Mildenhall registered office: it is a registered-office service that refuses parcels |
 | VAT number, later | `legal/index.html`, the VAT status row | Only once HMRC registration takes effect. Until then the page states the company is not registered |
 | EU representative, if appointed | `privacy/index.html`, the Article 27 section | Name and address of the representative. An HTML comment marks the spot |
@@ -74,16 +72,13 @@ One template placeholder remains on purpose, `{{ADRESSE_RETOUR}}` in the terms o
 The first three matter to a bank or payment-provider reviewer: they email the published address, they submit the contact form, and they check that a customer can actually return goods.
 
 
-### Contact form (Web3Forms)
+### Contact
 
-1. Go to https://web3forms.com and enter the address that should **receive** the messages: `themoneylab54@gmail.com`. Click the confirmation link in the email you get. No account, no password. The key only delivers to that address, so it is safe to publish in the JavaScript.
-2. Copy the access key into `assets/js/contact.js`, replacing the empty string:
-   ```js
-   var WEB3FORMS_ACCESS_KEY = "paste-your-key-here";
-   ```
-3. Free plan: 250 submissions per month. The key is public by design; it can only deliver to the address it was created for. A honeypot field and client-side validation are already in place.
+The site carries no contact form. A form that cannot deliver is worse than no form: it shows an error to anyone who tries it, which is a standard rejection reason for Meta Business verification and for bank onboarding. The contact page instead shows `hello@getlizom.com` prominently, with the full company record beside it.
 
-Until the key is set, the form shows an explicit error asking visitors to email hello@getlizom.com directly. Make sure the public address `hello@getlizom.com` exists (or forwards to your inbox): it is printed on every page and compliance reviewers do test it.
+**The one thing that must be done: make hello@getlizom.com receive mail.** The domain has no MX record today, so anything sent to that address bounces, and the address is printed on every page. Create a mailbox or a forward to an inbox you read, then add the MX records to the DNS zone.
+
+Once that inbox works, a contact form can be added back in minutes with any no-backend form service.
 
 ### Images
 
